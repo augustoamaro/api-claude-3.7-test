@@ -151,6 +151,20 @@ function closeModal() {
 }
 
 /**
+ * Atualiza uma tarefa existente na interface
+ * @param {Object} updatedTask - Dados atualizados da tarefa
+ */
+function updateTaskInUI(updatedTask) {
+    const index = state.tasks.findIndex(task => task.id === updatedTask.id);
+
+    if (index !== -1) {
+        state.tasks[index] = updatedTask;
+        renderTasks();
+        updateStats();
+    }
+}
+
+/**
  * Manipula o envio do formulário
  */
 async function handleFormSubmit() {
@@ -170,12 +184,12 @@ async function handleFormSubmit() {
     try {
         if (id) {
             // Atualizar tarefa existente
-            const updatedTask = await api.updateTask(id, { title, description });
-            updateTask(updatedTask);
+            const updatedTask = await window.updateTask(id, { title, description });
+            updateTaskInUI(updatedTask);
             showNotification('Missão atualizada com sucesso!', 'success');
         } else {
             // Criar nova tarefa
-            const newTask = await api.createTask({ title, description });
+            const newTask = await window.createTask({ title, description });
             addTask(newTask);
             showNotification('Nova missão adicionada!', 'success');
 
@@ -202,7 +216,7 @@ async function handleFormSubmit() {
 async function loadTasks() {
     try {
         showLoading();
-        const tasks = await api.getAllTasks();
+        const tasks = await window.getAllTasks();
         state.tasks = tasks;
         renderTasks();
         updateStats();
@@ -315,26 +329,12 @@ function addTask(task) {
 }
 
 /**
- * Atualiza uma tarefa existente
- * @param {Object} updatedTask - Dados atualizados da tarefa
- */
-function updateTask(updatedTask) {
-    const index = state.tasks.findIndex(task => task.id === updatedTask.id);
-
-    if (index !== -1) {
-        state.tasks[index] = updatedTask;
-        renderTasks();
-        updateStats();
-    }
-}
-
-/**
  * Confirma a exclusão de uma tarefa
  * @param {Object} task - Tarefa a ser excluída
  */
 function confirmDeleteTask(task) {
     if (confirm(`Tem certeza que deseja excluir a missão "${task.title}"?`)) {
-        deleteTask(task.id);
+        deleteTaskFromUI(task.id);
     }
 }
 
@@ -342,9 +342,10 @@ function confirmDeleteTask(task) {
  * Remove uma tarefa
  * @param {number} id - ID da tarefa
  */
-async function deleteTask(id) {
+async function deleteTaskFromUI(id) {
     try {
-        await api.deleteTask(id);
+        // Usar a função importada do módulo api
+        await window.deleteTask(id);
 
         const index = state.tasks.findIndex(task => task.id === id);
 
@@ -373,13 +374,13 @@ async function toggleTaskStatus(id, completed) {
         const wasCompleted = task.completed;
 
         // Enviar todos os dados necessários da tarefa, não apenas o status
-        const updatedTask = await api.updateTask(id, {
+        const updatedTask = await window.updateTask(id, {
             title: task.title,
             description: task.description,
             completed: completed
         });
 
-        updateTask(updatedTask);
+        updateTaskInUI(updatedTask);
 
         if (!wasCompleted && completed) {
             showNotification('Missão concluída! +20 XP', 'success');

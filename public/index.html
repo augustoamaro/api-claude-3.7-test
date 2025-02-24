@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quest Manager - Gerenciador de Tarefas Gamificado</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Press+Start+2P&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Press+Start+2P&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
 </head>
 
 <body>
@@ -18,30 +20,48 @@
         <aside class="player-stats">
             <div class="player-profile">
                 <div class="avatar">
-                    <i class="fas fa-user-astronaut"></i>
+                    <i class="fas fa-user-circle"></i>
                 </div>
-                <h2 class="player-name">Aventureiro</h2>
-                <div class="level">
-                    <span class="level-text">Nível 1</span>
-                    <div class="xp-bar">
-                        <div class="xp-progress" style="width: 25%"></div>
+                <div class="player-info">
+                    <h2>Aventureiro</h2>
+                    <div class="level">
+                        <span class="level-text">Nível 1</span>
+                        <div class="xp-bar">
+                            <div class="xp-progress" style="width: 25%"></div>
+                        </div>
+                        <span class="xp-text">25/100 XP</span>
                     </div>
-                    <span class="xp-text">25/100 XP</span>
                 </div>
             </div>
 
             <div class="stats">
                 <div class="stat">
                     <i class="fas fa-check-circle"></i>
-                    <span>Tarefas Concluídas: <span id="completed-count">0</span></span>
+                    <span>Missões Concluídas: <strong id="completed-count">0</strong></span>
                 </div>
                 <div class="stat">
-                    <i class="fas fa-list"></i>
-                    <span>Tarefas Pendentes: <span id="pending-count">0</span></span>
+                    <i class="fas fa-hourglass-half"></i>
+                    <span>Missões Pendentes: <strong id="pending-count">0</strong></span>
                 </div>
                 <div class="stat">
                     <i class="fas fa-trophy"></i>
-                    <span>Conquistas: <span id="achievements-count">0</span></span>
+                    <span>Conquistas: <strong id="achievements-count">0</strong></span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Missões Vencidas: <strong id="overdue-count">0</strong></span>
+                </div>
+            </div>
+
+            <div class="categories-section">
+                <div class="section-header">
+                    <h3>Categorias</h3>
+                    <button id="add-category-btn" class="btn-icon" title="Nova Categoria">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="categories-list" id="categories-list">
+                    <!-- Categorias serão carregadas dinamicamente -->
                 </div>
             </div>
 
@@ -89,16 +109,56 @@
                     <button id="add-quest-btn" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Nova Missão
                     </button>
-                    <div class="filter">
-                        <label for="filter-quests">Filtrar:</label>
-                        <select id="filter-quests">
-                            <option value="all">Todas</option>
-                            <option value="pending">Pendentes</option>
-                            <option value="completed">Concluídas</option>
-                        </select>
+                    <div class="filter-group">
+                        <div class="filter">
+                            <label for="filter-quests">Status:</label>
+                            <select id="filter-quests">
+                                <option value="all">Todas</option>
+                                <option value="pending">Pendentes</option>
+                                <option value="completed">Concluídas</option>
+                                <option value="overdue">Vencidas</option>
+                            </select>
+                        </div>
+                        <div class="filter">
+                            <label for="filter-priority">Prioridade:</label>
+                            <select id="filter-priority">
+                                <option value="">Todas</option>
+                                <option value="baixa">Baixa</option>
+                                <option value="média">Média</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                        <div class="filter">
+                            <label for="filter-category">Categoria:</label>
+                            <select id="filter-category">
+                                <option value="">Todas</option>
+                                <!-- Categorias serão carregadas dinamicamente -->
+                            </select>
+                        </div>
                     </div>
                 </div>
             </header>
+
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Buscar missões...">
+                <button id="search-btn" class="btn btn-secondary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="sort-options">
+                <span>Ordenar por:</span>
+                <button class="sort-btn" data-sort="title">Título</button>
+                <button class="sort-btn" data-sort="priority">Prioridade</button>
+                <button class="sort-btn" data-sort="dueDate">Data</button>
+                <button class="sort-btn active" data-sort="createdAt">Criação</button>
+            </div>
+
+            <div class="bulk-actions">
+                <button id="select-all-btn" class="btn btn-secondary">Selecionar Todas</button>
+                <button id="complete-selected-btn" class="btn btn-success" disabled>Concluir Selecionadas</button>
+                <button id="delete-selected-btn" class="btn btn-danger" disabled>Excluir Selecionadas</button>
+            </div>
 
             <div class="quest-list" id="quest-list">
                 <!-- As tarefas serão carregadas dinamicamente aqui -->
@@ -115,25 +175,75 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modal-title">Nova Missão</h2>
-                <button class="close-btn" id="close-modal">&times;</button>
+                <button id="close-modal" class="close-btn"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <form id="quest-form">
                     <input type="hidden" id="quest-id">
                     <div class="form-group">
-                        <label for="quest-title">Título da Missão:</label>
-                        <input type="text" id="quest-title" required minlength="3" maxlength="100">
+                        <label for="quest-title">Título</label>
+                        <input type="text" id="quest-title" placeholder="Digite o título da missão" required>
                     </div>
                     <div class="form-group">
-                        <label for="quest-description">Descrição da Missão:</label>
-                        <textarea id="quest-description" rows="4" maxlength="500"></textarea>
+                        <label for="quest-description">Descrição</label>
+                        <textarea id="quest-description" placeholder="Descreva sua missão"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quest-priority">Prioridade</label>
+                            <select id="quest-priority">
+                                <option value="baixa">Baixa</option>
+                                <option value="média" selected>Média</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quest-category">Categoria</label>
+                            <select id="quest-category">
+                                <option value="">Sem categoria</option>
+                                <!-- Categorias serão carregadas dinamicamente -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quest-due-date">Data de Vencimento</label>
+                        <input type="date" id="quest-due-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="quest-tags">Tags (separadas por vírgula)</label>
+                        <input type="text" id="quest-tags" placeholder="Ex: urgente, trabalho, projeto">
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                        <button type="button" class="btn btn-danger" id="cancel-btn">Cancelar</button>
+                        <button type="button" id="cancel-btn" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de categoria -->
+    <div class="modal" id="category-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="category-modal-title">Nova Categoria</h2>
+                <button id="close-category-modal" class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="category-form">
+                <input type="hidden" id="category-id">
+                <div class="form-group">
+                    <label for="category-name">Nome</label>
+                    <input type="text" id="category-name" placeholder="Digite o nome da categoria" required>
+                </div>
+                <div class="form-group">
+                    <label for="category-color">Cor</label>
+                    <input type="color" id="category-color" value="#6a4ca5">
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-category-btn" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -145,30 +255,44 @@
 
     <!-- Template para as tarefas -->
     <template id="quest-template">
-        <div class="quest-card" data-id="">
+        <div class="quest-card">
             <div class="quest-header">
-                <h3 class="quest-title"></h3>
+                <div class="quest-status">
+                    <input type="checkbox" class="complete-quest">
+                    <span class="status-text">Pendente</span>
+                </div>
                 <div class="quest-actions">
-                    <button class="btn-icon edit-quest">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-icon delete-quest">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <button class="edit-quest btn-icon" title="Editar"><i class="fas fa-edit"></i></button>
+                    <button class="delete-quest btn-icon" title="Excluir"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
-            <p class="quest-description"></p>
-            <div class="quest-footer">
-                <div class="quest-status">
-                    <label class="checkbox-container">
-                        <input type="checkbox" class="complete-quest">
-                        <span class="checkmark"></span>
-                        <span class="status-text">Pendente</span>
-                    </label>
+            <div class="quest-body">
+                <h3 class="quest-title">Título da Tarefa</h3>
+                <p class="quest-description">Descrição da tarefa</p>
+                <div class="quest-meta">
+                    <div class="quest-priority">
+                        <i class="fas fa-flag"></i>
+                        <span class="priority-text">Média</span>
+                    </div>
+                    <div class="quest-category">
+                        <i class="fas fa-tag"></i>
+                        <span class="category-text">Sem categoria</span>
+                    </div>
+                    <div class="quest-due-date">
+                        <i class="fas fa-calendar"></i>
+                        <span class="due-date-text">Sem prazo</span>
+                    </div>
                 </div>
+                <div class="quest-tags"></div>
+            </div>
+            <div class="quest-footer">
                 <div class="quest-date">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span class="date-text"></span>
+                    <i class="fas fa-clock"></i>
+                    <span class="date-text">01/01/2023</span>
+                </div>
+                <div class="quest-xp">
+                    <i class="fas fa-star"></i>
+                    <span class="xp-reward">+20 XP</span>
                 </div>
             </div>
         </div>

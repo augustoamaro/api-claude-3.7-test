@@ -112,11 +112,20 @@ body {
     border: 3px solid var(--primary-light);
 }
 
-.player-name {
+.player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.player-info h2 {
     font-family: var(--font-game);
     font-size: 18px;
     color: var(--text-light);
     margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .level {
@@ -175,6 +184,64 @@ body {
     background-color: var(--bg-light);
     border-radius: 50%;
     color: var(--primary-light);
+}
+
+.stat strong {
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.categories-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    font-family: var(--font-game);
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.category-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.category-name {
+    flex: 1;
+    font-size: 14px;
+}
+
+.category-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    background-color: var(--bg-light);
+    padding: 2px 6px;
+    border-radius: 10px;
 }
 
 .achievements {
@@ -275,6 +342,8 @@ header {
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
     border: 2px solid var(--primary-dark);
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 header h1 {
@@ -292,8 +361,15 @@ header h1 i {
 
 .controls {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 15px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -305,6 +381,7 @@ header h1 i {
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     transition: all var(--transition-speed) ease;
 }
@@ -316,6 +393,17 @@ header h1 i {
 
 .btn-primary:hover {
     background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-medium);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -342,6 +430,26 @@ header h1 i {
     box-shadow: var(--shadow-md);
 }
 
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-icon:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    transform: scale(1.1);
+}
+
 .filter {
     display: flex;
     align-items: center;
@@ -363,6 +471,68 @@ header h1 i {
     cursor: pointer;
 }
 
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--primary-dark);
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-family: var(--font-main);
+}
+
+.search-bar input::placeholder {
+    color: var(--text-muted);
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.sort-options span {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.sort-btn {
+    padding: 6px 12px;
+    background-color: var(--bg-light);
+    border: 1px solid var(--bg-light);
+    border-radius: var(--border-radius-md);
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.sort-btn:hover {
+    background-color: var(--bg-medium);
+    color: var(--text-light);
+}
+
+.sort-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border-color: var(--primary-light);
+}
+
+.bulk-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
 /* Lista de tarefas */
 .quest-list {
     display: grid;
@@ -374,11 +544,9 @@ header h1 i {
 .quest-card {
     background-color: var(--bg-medium);
     border-radius: var(--border-radius-lg);
-    padding: 20px;
     box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
-    gap: 15px;
     border: 2px solid var(--primary-dark);
     transition: all var(--transition-speed) ease;
     position: relative;
@@ -412,14 +580,27 @@ header h1 i {
 .quest-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--bg-light);
 }
 
-.quest-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-light);
-    margin-right: 10px;
+.quest-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quest-status input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--success);
+}
+
+.status-text {
+    font-size: 14px;
+    color: var(--text-muted);
 }
 
 .quest-actions {
@@ -427,102 +608,76 @@ header h1 i {
     gap: 5px;
 }
 
-.btn-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+.quest-body {
+    padding: 15px;
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-light);
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all var(--transition-speed) ease;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.btn-icon:hover {
-    background-color: var(--primary-color);
+.quest-title {
+    font-size: 18px;
+    font-weight: 600;
     color: var(--text-light);
-    transform: scale(1.1);
-}
-
-.edit-quest:hover {
-    background-color: var(--info);
-}
-
-.delete-quest:hover {
-    background-color: var(--danger);
 }
 
 .quest-description {
     font-size: 14px;
     color: var(--text-muted);
     line-height: 1.5;
-    flex: 1;
+    margin-bottom: 10px;
+}
+
+.quest-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.quest-priority, .quest-category, .quest-due-date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.quest-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.tag {
+    padding: 3px 8px;
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
 }
 
 .quest-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.1);
     font-size: 12px;
     color: var(--text-muted);
-    margin-top: auto;
 }
 
-.quest-status {
+.quest-date, .quest-xp {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-
-.checkbox-container input {
-    display: none;
-}
-
-.checkmark {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--primary-color);
-    border-radius: 4px;
-    display: inline-block;
-    position: relative;
-}
-
-.checkbox-container input:checked ~ .checkmark {
-    background-color: var(--success);
-    border-color: var(--success);
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 5px;
-    top: 1px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.quest-date {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.xp-reward {
+    color: var(--secondary-color);
+    font-weight: 600;
 }
 
 /* Modal */
@@ -584,6 +739,17 @@ header h1 i {
     margin-bottom: 20px;
 }
 
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -592,7 +758,8 @@ header h1 i {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 12px;
     background-color: var(--bg-light);
@@ -603,8 +770,14 @@ header h1 i {
     font-size: 14px;
 }
 
+.form-group input[type="color"] {
+    height: 40px;
+    padding: 5px;
+}
+
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(106, 76, 175, 0.3);
@@ -739,8 +912,17 @@ header h1 i {
     animation: konami 3s linear;
 }
 
+/* Mensagem de nenhuma tarefa */
+.empty-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
 /* Responsividade */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .game-container {
         flex-direction: column;
     }
@@ -749,36 +931,57 @@ header h1 i {
         flex: 0 0 auto;
         height: auto;
         position: static;
+        max-height: 400px;
     }
-}
-
-@media (max-width: 600px) {
+    
     header {
         flex-direction: column;
-        gap: 15px;
         align-items: flex-start;
     }
     
     .controls {
         width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
     }
     
+    .filter-group {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
     .quest-list {
         grid-template-columns: 1fr;
     }
     
-    .btn {
-        width: 100%;
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .sort-options, .bulk-actions {
         justify-content: center;
     }
     
     .filter {
-        width: 100%;
+        flex: 1;
     }
     
     .filter select {
-        flex: 1;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-group {
+        flex-direction: column;
+    }
+    
+    .bulk-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
     }
 } 

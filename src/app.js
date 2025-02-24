@@ -8,6 +8,7 @@ const config = require('./config/config');
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
 const taskRoutes = require('./routes/taskRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 /**
  * Aplicação Express
@@ -39,6 +40,7 @@ app.get('/api/status', (req, res) => {
 
 // Rotas da API
 app.use('/api/tasks', taskRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Rota para o frontend
 app.get('/', (req, res) => {

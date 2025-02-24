@@ -37,4 +37,18 @@ router.put('/:id', taskController.updateTask);
  */
 router.delete('/:id', taskController.deleteTask);
 
+/**
+ * @route   POST /api/tasks/bulk-update
+ * @desc    Atualizar o status de várias tarefas
+ * @access  Público
+ */
+router.post('/bulk-update', taskController.bulkUpdateTaskStatus);
+
+/**
+ * @route   GET /api/tasks/stats
+ * @desc    Obter estatísticas das tarefas
+ * @access  Público
+ */
+router.get('/stats', taskController.getTaskStats);
+
 module.exports = router;
