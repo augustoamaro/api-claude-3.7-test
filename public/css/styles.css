@@ -1,0 +1,784 @@
+/* Variáveis CSS */
+:root {
+    /* Cores principais */
+    --primary-color: #6a4caf;
+    --primary-dark: #4a3582;
+    --primary-light: #9b7ad5;
+    --secondary-color: #ff9800;
+    --secondary-dark: #e68a00;
+    --secondary-light: #ffb74d;
+    
+    /* Cores de fundo */
+    --bg-dark: #1a1a2e;
+    --bg-medium: #242444;
+    --bg-light: #30305a;
+    
+    /* Cores de texto */
+    --text-light: #f0f0f0;
+    --text-muted: #b0b0cc;
+    --text-dark: #333;
+    
+    /* Cores de status */
+    --success: #4caf50;
+    --warning: #ff9800;
+    --danger: #f44336;
+    --info: #2196f3;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+    
+    /* Bordas */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    
+    /* Fontes */
+    --font-main: 'Poppins', sans-serif;
+    --font-game: 'Press Start 2P', cursive;
+    
+    /* Animações */
+    --transition-speed: 0.3s;
+}
+
+/* Reset e estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(106, 76, 175, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(255, 152, 0, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 50% 50%, rgba(33, 150, 243, 0.05) 0%, transparent 30%);
+}
+
+/* Container principal */
+.game-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Barra lateral com estatísticas do jogador */
+.player-stats {
+    flex: 0 0 300px;
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 20px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    border: 2px solid var(--primary-dark);
+}
+
+.player-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--bg-light);
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: var(--text-light);
+    box-shadow: var(--shadow-md);
+    border: 3px solid var(--primary-light);
+}
+
+.player-name {
+    font-family: var(--font-game);
+    font-size: 18px;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+.level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+}
+
+.level-text {
+    font-family: var(--font-game);
+    font-size: 14px;
+    color: var(--secondary-color);
+}
+
+.xp-bar {
+    width: 100%;
+    height: 10px;
+    background-color: var(--bg-light);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.xp-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--secondary-light));
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+.xp-text {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.stat i {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    border-radius: 50%;
+    color: var(--primary-light);
+}
+
+.achievements {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.achievements h3 {
+    font-family: var(--font-game);
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius-md);
+    font-size: 14px;
+    transition: all var(--transition-speed) ease;
+}
+
+.achievement-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.achievement-title {
+    font-weight: 500;
+}
+
+.achievement-xp {
+    font-size: 12px;
+    color: var(--secondary-color);
+}
+
+.achievement.locked {
+    opacity: 0.6;
+}
+
+.achievement.unlocked {
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid var(--success);
+}
+
+.achievement i {
+    color: var(--text-muted);
+}
+
+.achievement.unlocked i {
+    color: var(--success);
+}
+
+.next-level-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--bg-light);
+}
+
+.next-level-info h4 {
+    font-family: var(--font-game);
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.next-level-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#xp-remaining {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Área principal do jogo */
+.quest-board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--primary-dark);
+}
+
+header h1 {
+    font-family: var(--font-game);
+    font-size: 24px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header h1 i {
+    color: var(--secondary-color);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-main);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-success {
+    background-color: var(--success);
+    color: var(--text-light);
+}
+
+.btn-success:hover {
+    background-color: #3d8b40;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: var(--text-light);
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter label {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.filter select {
+    padding: 8px 12px;
+    background-color: var(--bg-light);
+    border: 1px solid var(--primary-dark);
+    border-radius: var(--border-radius-md);
+    color: var(--text-light);
+    font-family: var(--font-main);
+    cursor: pointer;
+}
+
+/* Lista de tarefas */
+.quest-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.quest-card {
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 2px solid var(--primary-dark);
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quest-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.quest-card.completed {
+    border-color: var(--success);
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.quest-card.completed::before {
+    content: "CONCLUÍDA";
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background-color: var(--success);
+    color: white;
+    padding: 5px 30px;
+    transform: rotate(45deg);
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.quest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.quest-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-right: 10px;
+}
+
+.quest-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-icon:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    transform: scale(1.1);
+}
+
+.edit-quest:hover {
+    background-color: var(--info);
+}
+
+.delete-quest:hover {
+    background-color: var(--danger);
+}
+
+.quest-description {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    flex: 1;
+}
+
+.quest-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: auto;
+}
+
+.quest-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.quest-date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed) ease;
+    border: 2px solid var(--primary-color);
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--bg-light);
+}
+
+.modal-header h2 {
+    font-family: var(--font-game);
+    font-size: 18px;
+    color: var(--text-light);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--transition-speed) ease;
+}
+
+.close-btn:hover {
+    color: var(--danger);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--bg-light);
+    border: 1px solid var(--primary-dark);
+    border-radius: var(--border-radius-md);
+    color: var(--text-light);
+    font-family: var(--font-main);
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(106, 76, 175, 0.3);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed) ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Notificações */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    padding: 15px 20px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-medium);
+    color: var(--text-light);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(120%);
+    transition: transform 0.5s ease;
+    max-width: 300px;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid var(--success);
+}
+
+.notification.error {
+    border-left: 4px solid var(--danger);
+}
+
+.notification.info {
+    border-left: 4px solid var(--info);
+}
+
+.notification i {
+    font-size: 20px;
+}
+
+.notification.success i {
+    color: var(--success);
+}
+
+.notification.error i {
+    color: var(--danger);
+}
+
+.notification.info i {
+    color: var(--info);
+}
+
+/* Loading spinner */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 40px;
+    grid-column: 1 / -1;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(106, 76, 175, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animações */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Efeito Konami */
+@keyframes konami {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+.konami {
+    animation: konami 3s linear;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .game-container {
+        flex-direction: column;
+    }
+    
+    .player-stats {
+        flex: 0 0 auto;
+        height: auto;
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .controls {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .quest-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .filter {
+        width: 100%;
+    }
+    
+    .filter select {
+        flex: 1;
+    }
+} 
