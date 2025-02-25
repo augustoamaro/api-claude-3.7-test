@@ -5,6 +5,7 @@ Uma API RESTful para gerenciamento de tarefas, construída com Node.js e Express
 ## Características
 
 - Arquitetura em camadas (MVC)
+- Princípio de Responsabilidade Única (SRP)
 - Validação de dados
 - Tratamento de erros centralizado
 - Documentação de código
@@ -51,10 +52,14 @@ npm run dev
 src/
 ├── config/         # Configurações da aplicação
 ├── controllers/    # Controladores da API
+│   ├── task/       # Controladores de tarefas com responsabilidade única
+│   └── category/   # Controladores de categorias com responsabilidade única
 ├── middleware/     # Middlewares do Express
 ├── models/         # Modelos de dados
 ├── routes/         # Rotas da API
 ├── services/       # Lógica de negócios
+│   ├── task/       # Serviços de tarefas com responsabilidade única
+│   └── category/   # Serviços de categorias com responsabilidade única
 ├── utils/          # Utilitários
 └── app.js          # Ponto de entrada da aplicação
 
@@ -63,6 +68,50 @@ public/
 ├── js/             # Scripts da aplicação
 └── index.html      # Página principal
 ```
+
+## Arquitetura
+
+O projeto segue uma arquitetura baseada no princípio de responsabilidade única (SRP), onde cada componente tem uma única responsabilidade bem definida:
+
+### Serviços
+
+Cada serviço é responsável por uma única operação de negócio:
+
+#### Serviços de Tarefas
+- `CreateTaskService`: Criação de tarefas
+- `GetAllTasksService`: Listagem de tarefas com filtros
+- `GetTaskByIdService`: Busca de tarefa por ID
+- `UpdateTaskService`: Atualização de tarefa
+- `DeleteTaskService`: Exclusão de tarefa
+- `BulkUpdateTaskStatusService`: Atualização em massa do status de tarefas
+- `GetTaskStatsService`: Obtenção de estatísticas de tarefas
+
+#### Serviços de Categorias
+- `CreateCategoryService`: Criação de categorias
+- `GetAllCategoriesService`: Listagem de categorias
+- `GetCategoryByIdService`: Busca de categoria por ID
+- `UpdateCategoryService`: Atualização de categoria
+- `DeleteCategoryService`: Exclusão de categoria
+
+### Controladores
+
+Cada controlador é responsável por uma única rota/operação:
+
+#### Controladores de Tarefas
+- `CreateTaskController`: Criação de tarefas
+- `GetAllTasksController`: Listagem de tarefas
+- `GetTaskByIdController`: Busca de tarefa por ID
+- `UpdateTaskController`: Atualização de tarefa
+- `DeleteTaskController`: Exclusão de tarefa
+- `BulkUpdateTaskStatusController`: Atualização em massa do status de tarefas
+- `GetTaskStatsController`: Obtenção de estatísticas de tarefas
+
+#### Controladores de Categorias
+- `CreateCategoryController`: Criação de categorias
+- `GetAllCategoriesController`: Listagem de categorias
+- `GetCategoryByIdController`: Busca de categoria por ID
+- `UpdateCategoryController`: Atualização de categoria
+- `DeleteCategoryController`: Exclusão de categoria
 
 ## Endpoints da API
 
@@ -136,18 +185,17 @@ A aplicação inclui uma interface gamificada que transforma o gerenciamento de 
 - **Estatísticas**: Acompanhe seu progresso com estatísticas detalhadas
 - **Easter Eggs**: Descubra recursos escondidos (dica: tente o código Konami)
 
-## Novas Funcionalidades
+## Princípios de Design
 
-### Versão 2.0
+### Princípio de Responsabilidade Única (SRP)
 
-- **Categorias de Tarefas**: Organize suas tarefas em categorias personalizáveis
-- **Prioridades**: Defina a importância de cada tarefa (baixa, média, alta)
-- **Datas de Vencimento**: Estabeleça prazos para suas tarefas
-- **Filtros Avançados**: Filtre tarefas por múltiplos critérios
-- **Ordenação**: Ordene tarefas por diferentes campos
-- **Operações em Lote**: Atualize várias tarefas de uma vez
-- **Estatísticas Detalhadas**: Visualize métricas sobre suas tarefas
-- **Tags**: Adicione etiquetas às suas tarefas para melhor organização
+Cada classe no projeto tem uma única responsabilidade, o que traz os seguintes benefícios:
+
+- **Manutenibilidade**: Código mais fácil de manter e entender
+- **Testabilidade**: Facilidade para escrever testes unitários
+- **Reutilização**: Componentes podem ser reutilizados em diferentes contextos
+- **Escalabilidade**: Facilidade para adicionar novas funcionalidades
+- **Desacoplamento**: Redução de dependências entre componentes
 
 ## Scripts Disponíveis
 
